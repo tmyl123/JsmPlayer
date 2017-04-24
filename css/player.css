@@ -18,6 +18,12 @@ body {
     position: relative;
 }
 
+.player-logo {
+    position: absolute;
+    bottom: 0;
+    right:0;
+}
+
 .player-media {
     position: relative;
     width: 640px;
@@ -31,7 +37,8 @@ body {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    /*background: #099;*/
+    background-color:rgba(0, 0, 0, 0.5);
+    border-radius: 4%;
     position: absolute;
     bottom: 0;
     z-index: 2;

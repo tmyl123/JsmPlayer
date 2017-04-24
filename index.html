@@ -2,21 +2,21 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="jsmpeg.min.js"></script>
-    <script src="https://unpkg.com/vue@2.1.3/dist/vue.js"></script>
-    <script type="text/javascript" src="node_modules/screenfull/dist/screenfull.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.2.0/nouislider.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.2.0/nouislider.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.css" />
     <title>JSMplayer</title>
+    <script type="text/javascript" src="jsmpeg.min.js"></script>
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script type="text/javascript" src="node_modules/screenfull/dist/screenfull.js"></script>
+    <script src="node_modules/nouislider/distribute/nouislider.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/nouislider/distribute/nouislider.min.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="font-awesome-3.2.1/css/font-awesome.min.css" />
+
 </head>
 
 <body>
     <div id="main">
         <div :class="{'player': !isFullscreen, 'player-isfull': isFullscreen}" id="JSMplayer" @mouseover="onMouseShow" @mouseleave="onMouseHide">
             <canvas id="video-canvas" :class="{'player-media': !isFullscreen, 'player-media-isfull': isFullscreen}" @click="clickActive">
-            </canvas>
             </canvas>
             <transition name="fade">
                 <div class="player-UI" v-show="showUI && !isIdle">

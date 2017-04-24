@@ -1,3 +1,4 @@
+
 var vue = new Vue({
     el: '#main',
     data: {
@@ -11,16 +12,17 @@ var vue = new Vue({
         showUI: true,
         isFullscreen: false,
         isMute: false,
-        isIdle: false
+        isIdle: false,
+        canPlay: ""
     },
     mounted() {
         var isMac = navigator.userAgent.indexOf('Mac') >= 0;
         if (isMac) {
-            this.jsmegInstant()
+            this.jsmegInstant();
         } else {
-            alert("Yor are not mac user!")
-            this.jsmegInstant()
-        };
+            alert("Yor are not mac user!");
+            this.jsmegInstant();
+        }
         player.pause();
         screenfull.onchange(function() {
             vue.$data.isFullscreen = !vue.$data.isFullscreen;
@@ -58,7 +60,6 @@ var vue = new Vue({
             vue.$data.isIdle = false;
             startTimer();
         }
-
     },
 
 
@@ -87,18 +88,18 @@ var vue = new Vue({
         togglePlay() {
             if (player.isPlaying) {
                 player.pause();
-                this.playing = false
+                this.playing = false;
             } else {
                 player.play();
-                this.playing = true
+                this.playing = true;
             }
         },
         toggleVolume() {
-            const currentVolume = slider.noUiSlider.get()
-            if (currentVolume != 0) {
-                slider.noUiSlider.set(0)
+            const currentVolume = slider.noUiSlider.get();
+            if (currentVolume !== 0) {
+                slider.noUiSlider.set(0);
             } else {
-                slider.noUiSlider.set(4)
+                slider.noUiSlider.set(4);
             }
             this.isMute = !this.isMute;
         },
@@ -114,7 +115,7 @@ var vue = new Vue({
             if (screenfull.enabled) {
                 screenfull.toggle(document.getElementById('JSMplayer'));
             } else {
-                alert("Your browser not support fullscreen..")
+                alert("Your browser not support fullscreen..");
             }
         },
         clickActive() {

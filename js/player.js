@@ -1,4 +1,3 @@
-
 var vue = new Vue({
     el: '#main',
     data: {
@@ -12,17 +11,16 @@ var vue = new Vue({
         showUI: true,
         isFullscreen: false,
         isMute: false,
-        isIdle: false,
-        canPlay: ""
+        isIdle: false
     },
     mounted() {
         var isMac = navigator.userAgent.indexOf('Mac') >= 0;
         if (isMac) {
-            this.jsmegInstant();
+            this.jsmegInstant()
         } else {
-            alert("Yor are not mac user!");
-            this.jsmegInstant();
-        }
+            alert("Yor are not mac user!")
+            this.jsmegInstant()
+        };
         player.pause();
         screenfull.onchange(function() {
             vue.$data.isFullscreen = !vue.$data.isFullscreen;
@@ -60,6 +58,7 @@ var vue = new Vue({
             vue.$data.isIdle = false;
             startTimer();
         }
+
     },
 
 
@@ -83,25 +82,36 @@ var vue = new Vue({
             });
             Slider.noUiSlider.on('update', function(values, handle) {
                 player.setVolume(values[handle]);
+                if (values[handle] < 0.01) {
+                  vue.$data.isMute = true;
+                } else {
+                  vue.$data.isMute = false;
+                }
             });
         },
+
+        unLock() {
+        },
+
         togglePlay() {
-            if (player.isPlaying) {
-                player.pause();
-                this.playing = false;
-            } else {
+            if (!player.isPlaying) {
                 player.play();
-                this.playing = true;
+                this.playing = true
+          player.audioOut.unlock(function() {
+          //  alert("unlock IPHONE audio");
+          });
+            } else {
+                player.pause();
+                this.playing = false
             }
         },
         toggleVolume() {
-            const currentVolume = slider.noUiSlider.get();
-            if (currentVolume !== 0) {
-                slider.noUiSlider.set(0);
+            const currentVolume = slider.noUiSlider.get()
+            if (currentVolume != 0) {
+                slider.noUiSlider.set(0)
             } else {
-                slider.noUiSlider.set(4);
+                slider.noUiSlider.set(4)
             }
-            this.isMute = !this.isMute;
         },
         onMouseShow() {
             if (!this.isFullscreen) {
@@ -115,7 +125,7 @@ var vue = new Vue({
             if (screenfull.enabled) {
                 screenfull.toggle(document.getElementById('JSMplayer'));
             } else {
-                alert("Your browser not support fullscreen..");
+                alert("Your browser not support fullscreen..")
             }
         },
         clickActive() {

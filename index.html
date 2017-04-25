@@ -20,10 +20,10 @@
             </canvas>
             <transition name="fade">
                 <div class="player-UI" v-show="showUI && !isIdle">
-                    <i :class="{'fa fa-pause fa-1g': playing, 'fa fa-play fa-1g': !playing}" @click="togglePlay"></i>
-                    <i :class="{'fa fa-volume-up fa-1g': !isMute, 'fa fa-volume-off fa-1g': isMute}" @click="toggleVolume"></i>
+                    <i :class="{'fa fa-pause fa-2x': playing, 'fa fa-play fa-2x': !playing}" @click="togglePlay"></i>
+                    <i :class="{'fa fa-volume-up fa-2x': !isMute, 'fa fa-volume-off fa-2x': isMute}" @click="toggleVolume"></i>
                     <div id="slider"></div>
-                    <i @click="screenFull" class="fa icon-fullscreen fa-1g"></i>
+                    <i @click="screenFull" class="fa icon-fullscreen fa-2x"></i>
                 </div>
             </transition>
         </div>

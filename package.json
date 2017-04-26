@@ -14,7 +14,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node websocket-relay.js pp 8081 8082 & node expressnode.js & ffmpeg -f avfoundation -i \"0:0\" -codec:v mpeg1video -bf 0 -codec:a mp2 -r 30 -f mpegts \"http://127.0.0.1:8081/pp\""
+    "start": "node websocket-relay.js pp 8081 8082 & node expressnode.js",
+    "stream": "ffmpeg -f avfoundation -i \"0:0\" -codec:v mpeg1video -bf 0 -codec:a mp2 -r 30 -f mpegts \"http://127.0.0.1:8081/pp\""
   },
   "author": "tommy",
   "license": "MIT"

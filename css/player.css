@@ -10,6 +10,14 @@ body {
     z-index: 1
 }*/
 
+.logo-live {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height:70px;
+}
+
+
 .player {
     width: 640px;
     height: 320px;
@@ -120,4 +128,5 @@ body {
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
+
 

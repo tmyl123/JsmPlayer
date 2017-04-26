@@ -82,11 +82,7 @@ var vue = new Vue({
             });
             Slider.noUiSlider.on('update', function(values, handle) {
                 player.setVolume(values[handle]);
-                if (values[handle] < 0.01) {
-                  vue.$data.isMute = true;
-                } else {
-                  vue.$data.isMute = false;
-                }
+
             });
         },
 

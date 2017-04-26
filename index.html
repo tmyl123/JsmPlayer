@@ -18,6 +18,7 @@
         <div :class="{'player': !isFullscreen, 'player-isfull': isFullscreen}" id="JSMplayer" @mouseover="onMouseShow" @mouseleave="onMouseHide">
             <canvas id="video-canvas" :class="{'player-media': !isFullscreen, 'player-media-isfull': isFullscreen}" @click="clickActive">
             </canvas>
+            <img src="assets/live3.png" class="logo-live">
             <transition name="fade">
                 <div class="player-UI" v-show="showUI && !isIdle">
                     <i :class="{'fa fa-pause fa-2x': playing, 'fa fa-play fa-2x': !playing}" @click="togglePlay"></i>

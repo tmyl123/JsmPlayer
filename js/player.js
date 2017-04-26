@@ -80,9 +80,13 @@ var vue = new Vue({
                     'max': this.slider.max
                 }
             });
-            Slider.noUiSlider.on('update', function(values, handle) {
+            Slider.noUiSlider.on('slide', function(values, handle) {
                 player.setVolume(values[handle]);
-
+                if (values[handle] > 0) {
+                    vue.$data.isMute = false;
+                } else {
+                    vue.$data.isMute = true;
+                }
             });
         },
 
@@ -103,6 +107,7 @@ var vue = new Vue({
         },
         toggleVolume() {
             const currentVolume = slider.noUiSlider.get()
+            this.isMute = !this.isMute;
             if (currentVolume != 0) {
                 slider.noUiSlider.set(0)
             } else {
@@ -121,7 +126,7 @@ var vue = new Vue({
             if (screenfull.enabled) {
                 screenfull.toggle(document.getElementById('JSMplayer'));
             } else {
-                alert("Your browser not support fullscreen..")
+                alert("Your browser not support fullscreen")
             }
         },
         clickActive() {

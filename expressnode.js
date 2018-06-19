@@ -7,7 +7,8 @@ server.listen(3000, function() {
 });
 app.use(express.static(__dirname));
 app.use(express.static('node_modules'));
-//若html名為index.html的話則不需這個, 這邊為基礎路由功能
-//app.get('/',function(request, response){
-//    response.send('Hello World!');
-//});
+
+app.get('/dev', function(req, res) {
+  res.sendFile(__dirname + '/index_dev.html');
+ // res.sendFile('index.html', { root: __dirname });
+});

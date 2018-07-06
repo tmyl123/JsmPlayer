@@ -1,12 +1,25 @@
 # JsmPlayer
 ### What is this?
-A Simple Jsmpeg player UI that play with Vuejs. If you're a mac user ready with node & ffmpeg installed, you're good to go.
+A Simple Jsmpeg player UI that play with Vuejs.
 
-### Why made this?
-IOS devices lack of native live streaming supported, but there is somehow a way to stream live through websocket, and render with canvas on HTML with the Jsmpeg. that's good, but to make it better, we still need a player UI for it, right? 
+
+### Prerequisite
+* ffmpeg: encoding stream for demo purpose.
+* nodejs: server html for demo purpose.
+
 
 ### Usage:
-simply clone the repository and issue ```npm install```, then ```npm start```.
-You can go ahead for your browser at ```localhost:3000``` with the stream and the player.
+* ```git clone https://github.com/tmyl123/JsmPlayer.git```
+* ```npm install```
+* ```npm start```
 
-> I put webcam live stream in package.json with npm start command, just for convenience to display that it works. You can change any stream you want in that ```ffmpeg``` line. But just to remind you, Jsmpeg currently only support mpeg1/mp2, so take good care with this.
+
+You can go ahead for your browser at ```localhost:3000``` and will see the player.
+
+### Push stream
+
+On Linux: ```ffmpeg -f x11grab -video_size 1920x1080 -i :0.0+1920,0 -codec:v mpeg1video -codec:a mp2 -f mpegts "http://127.0.0.1:8081/secret"```
+
+On OSX: ```ffmpeg -f avfoundation -i 0:0 -codec:v mpeg1video -bf 0 -codec:a mp2 -r 30 -f mpegts "http://127.0.0.1:8081/secret"```
+
+On Windows: 

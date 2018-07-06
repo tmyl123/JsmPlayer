@@ -10,6 +10,7 @@ A Simple Jsmpeg player UI that play with Vuejs.
 
 ### Usage:
 * ```git clone https://github.com/tmyl123/JsmPlayer.git```
+* ```cd JsmPlayer```
 * ```npm install```
 * ```npm start```
 

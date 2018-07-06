@@ -18,7 +18,7 @@ var vue = new Vue({
         if (isMac) {
             this.jsmegInstant()
         } else {
-            alert("Yor are not mac user!")
+            //alert("Yor are not mac user!")
             this.jsmegInstant()
         };
         player.pause();

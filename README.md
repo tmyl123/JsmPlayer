@@ -15,7 +15,7 @@ A Simple Jsmpeg player UI that play with Vuejs.
 * ```npm start```
 
 
-You can go ahead for your browser at ```localhost:3000``` and will see the player.
+You can go ahead for your browser at ```http://localhost:3000/?ws=ws://127.0.0.1:8082``` and will see the player.
 
 ### Push stream
 

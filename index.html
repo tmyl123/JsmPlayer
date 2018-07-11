@@ -4,13 +4,12 @@
 <head>
     <title>JSMplayer</title>
     <script type="text/javascript" src="jsmpeg.min.js"></script>
-    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="node_modules/vue/dist/vue.js"></script>
     <script type="text/javascript" src="node_modules/screenfull/dist/screenfull.js"></script>
     <script src="node_modules/nouislider/distribute/nouislider.min.js"></script>
     <link rel="stylesheet" type="text/css" href="node_modules/nouislider/distribute/nouislider.min.css">
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="font-awesome-3.2.1/css/font-awesome.min.css" />
-
 </head>
 
 <body>
@@ -18,12 +17,9 @@
         <div :class="{'player': !isFullscreen, 'player-isfull': isFullscreen}" id="JSMplayer" @mouseover="onMouseShow" @mouseleave="onMouseHide">
             <canvas id="video-canvas" :class="{'player-media': !isFullscreen, 'player-media-isfull': isFullscreen}" @click="clickActive">
             </canvas>
-            <!--
-            <img src="assets/live3.png" class="logo-live">
-            -->
             <transition name="fade">
                 <div class="player-UI" v-show="showUI && !isIdle">
-                    <i :class="{'fa fa-pause fa-2x': playing, 'fa fa-play fa-2x': !playing}" @click="togglePlay"></i>
+                    <i :class="{'fa fa-pause fa-2x' : playing, 'fa fa-play fa-2x' : !playing}" @click="togglePlay"></i> 
                     <i :class="{'fa fa-volume-up fa-2x': !isMute, 'fa fa-volume-off fa-2x': isMute}" @click="toggleVolume"></i>
                     <div id="slider"></div>
                     <i @click="screenFull" class="fa icon-fullscreen fa-2x"></i>
@@ -32,7 +28,7 @@
         </div>
     </div>
     <script type="text/javascript" src="js/player.js"></script>
-    <link rel="stylesheet" href="css/player.css">
+    <link rel="stylesheet" type="text/css" href="css/player.css">
 </body>
 
 </html>

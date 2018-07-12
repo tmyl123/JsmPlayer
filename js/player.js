@@ -18,7 +18,7 @@ var vue = new Vue({
     },
     created() {
         screenfull.onchange(function() {
-            this.isFullscreen = !this.isFullscreen;
+            vue.$data.isFullscreen = !vue.$data.isFullscreen;
         });
     },
     mounted() {

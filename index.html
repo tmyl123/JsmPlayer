@@ -4,7 +4,7 @@
 <head>
     <title>JSMplayer</title>
     <script type="text/javascript" src="jsmpeg.min.js"></script>
-    <script src="node_modules/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="node_modules/screenfull/dist/screenfull.js"></script>
     <script src="node_modules/nouislider/distribute/nouislider.min.js"></script>
     <link rel="stylesheet" type="text/css" href="node_modules/nouislider/distribute/nouislider.min.css">
@@ -14,21 +14,24 @@
 
 <body>
     <div id="main">
-        <div :class="{'player': !isFullscreen, 'player-isfull': isFullscreen}" id="JSMplayer" @mouseover="onMouseShow" @mouseleave="onMouseHide">
-            <canvas id="video-canvas" :class="{'player-media': !isFullscreen, 'player-media-isfull': isFullscreen}" @click="clickActive">
-            </canvas>
-            <transition name="fade">
-                <div class="player-UI" v-show="showUI && !isIdle">
-                    <i :class="{'fa fa-pause fa-2x' : playing, 'fa fa-play fa-2x' : !playing}" @click="togglePlay"></i> 
-                    <i :class="{'fa fa-volume-up fa-2x': !isMute, 'fa fa-volume-off fa-2x': isMute}" @click="toggleVolume"></i>
-                    <div id="slider"></div>
-                    <i @click="screenFull" class="fa icon-fullscreen fa-2x"></i>
-                </div>
-            </transition>
+        <div class="player" id="JSMplayer">
+          <canvas id="video-canvas" class="player-media"></canvas>
+          <div class="player-UI">
+              <i class="fa fa-play fa-2x" id="play-btn"></i> 
+              <i class="fa fa-volume-up fa-2x" id="vol-btn"></i>
+              <div id="slider"></div>
+              <i class="fa icon-fullscreen fa-2x" id="full-btn"></i>
+          </div>
         </div>
     </div>
     <script type="text/javascript" src="js/player.js"></script>
     <link rel="stylesheet" type="text/css" href="css/player.css">
 </body>
+
+<script>
+    var canvas = document.getElementById('video-canvas'),
+        url    = 'ws://'+document.location.hostname+':8082/',
+        player = new JSMpeg.Player(url, {canvas: canvas});
+</script>
 
 </html>

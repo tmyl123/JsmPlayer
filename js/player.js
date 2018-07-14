@@ -1,173 +1,104 @@
-var vue = new Vue({
-    el: '#main',
-    data: {
-        slider: {
-            start: 2,
-            min: 0,
-            max: 10,
-            connect: [true, false]
-        },
-        showUI: true,
-        isFullscreen: false,
-        isMute: false,
-        isIdle: false,
-        timeoutID: "",
-        playing: "",
-        player: null,
-        lastVol: [],
-    },
-    created() {
-        screenfull.onchange(function() {
-            vue.$data.isFullscreen = !vue.$data.isFullscreen;
-        });
-    },
-    mounted() {
-        var self = this;
-        this.initPlayer();
-        this.initSlider();
-        this.player.pause();
+// 初始化 DOM
 
-        this.setup();
 
-    },
-    methods: {
-        initPlayer() {
 
-           this.player = new JSMpeg.Player(this.urlParams.ws, { canvas: this.canvas });
+var slider = document.getElementById('slider');
 
-        },
-        initSlider() {
-            noUiSlider.create(this.Slider, {
-                start: this.slider.start,
-                connect: [this.slider.connect[0], this.slider.connect[1]],
-                range: {
-                    'min': this.slider.min,
-                    'max': this.slider.max
-                }
-            });
-            this.Slider.noUiSlider.on('slide', function(values, handle) {
-                vue.player.setVolume(values[handle]);
-                if (values[handle] > 0) {
-                    vue.$data.isMute = false;
-                } else {
-                    vue.$data.isMute = true;
-                }
-            });
-        },
+var initVol = 2;
 
-        unLock() {
-          //this.player.audioOut.unlock(function() {
-          //  alert("unlock IPHONE audio");
-          //});
-        },
+noUiSlider.create(slider, {
+	start: initVol,
+	connect: [true, false],
+	range: {
+		'min': 0,
+		'max': 10
+	}
+});
 
-        togglePlay() {
-            console.log(this.player.isPlaying);
-            if (!this.player.isPlaying) {
-                this.player.play();
-                this.playing = true;
-            } else {
-                this.player.pause();
-                this.playing = false;
-            }
-        },
-        toggleVolume() {
-            this.isMute = !this.isMute;
-                this.lastVol.push(vue.player.getVolume());
-                if (this.lastVol.length > 2) {
-                  this.lastVol.shift();
-                }
-            if (this.lastVol[1] !== 0) {
-                slider.noUiSlider.set(0);
-                vue.player.setVolume(0);
-            } else {
-                console.log('setting volume to ' + this.lastVol[0]);
-                slider.noUiSlider.set(this.lastVol[0]);
-                vue.player.setVolume(this.lastVol[0]);
-            }
-        },
-        onMouseShow() {
-            if (!this.isFullscreen) {
-                this.showUI = true;
-            }
-        },
-        onMouseHide() {
-            this.showUI = false;
-        },
-        screenFull() {
-            if (screenfull.enabled) {
-                screenfull.toggle(document.getElementById('JSMplayer'));
-            } else {
-                alert("Your browser not support fullscreen");
-            }
-        },
-        clickActive() {
-            if (this.showUI) {
-                this.togglePlay();
-            }
-            if (this.isFullscreen) {
-                this.showUI = true;
-            }
-        },
-        startTimer() {
-            this.timeoutID = window.setTimeout(this.goInactive, 3000);
-        },
-        goInactive() {
-            this.isIdle = true;
-        },
-        resetTimer(e) {
-            window.clearTimeout(this.timeoutID);
+var curVol = [0, initVol];
 
-            this.goActive();
-        },
-        goActive() {
-            this.isIdle = false;
-            this.startTimer();
-        },
-        setup() {
-            window.addEventListener("mousemove", this.resetTimer, false);
-            window.addEventListener("mousedown", this.resetTimer, false);
-            window.addEventListener("keypress", this.resetTimer, false);
-            window.addEventListener("DOMMouseScroll", this.resetTimer, false);
-            window.addEventListener("mousewheel", this.resetTimer, false);
-            window.addEventListener("touchmove", this.resetTimer, false);
-            window.addEventListener("MSPointerMove", this.resetTimer, false);
-
-            this.startTimer();
-        },
-        getPlaystat() {
-          if (this.player.isPlaying) {
-            console.log('playing');
-            return 'fa fa-pause fa-2x';
-          } else {
-            console.log('not playing');
-            return 'fa fa-play fa-2x';
-          }
-        }
-    },
-    computed: {
-      canvas() {
-        return document.getElementById('video-canvas');
-      }, 
-      Slider() {
-        return document.getElementById('slider');
-      },
-      //player() {
-      //  return new JSMpeg.Player(this.url, { canvas: this.canvas });
-      //},
-      isMac() {
-        var macUser = navigator.userAgent.indexOf('Mac') >= 0; 
-        return (macUser) ? true : false;
-      },
-      urlParams() {
-        var search = window.location.href;
-        let hashes = search.slice(search.indexOf('?') + 1).split('&');
-        let params = {};
-        hashes.map(hash => {
-            let [key, val] = hash.split('=');
-            params[key] = decodeURIComponent(val);
-        });
-        return params;
-      }
+slider.noUiSlider.on('slide', function(values, handle) {
+    player.setVolume(values[handle]);
+    if (values[handle] == 0) {
+       player.setVolume(0);
+       slider.noUiSlider.set(0);
+       $("#vol-btn").addClass("fa-volume-off").removeClass("fa-volume-up");
+    } else {
+       $("#vol-btn").addClass("fa-volume-up").removeClass("fa-volume-off");
     }
 });
+
+$(document).ready(function(){
+player.pause();
+setup();
+    // 播放切換
+    $("#play-btn, #video-canvas").click(function(){
+        if (player.isPlaying) {
+           player.pause();
+           $("#play-btn").addClass("fa-play").removeClass("fa-pause");
+        } else {
+           player.play();
+           $("#play-btn").addClass("fa-pause").removeClass("fa-play");
+        }
+    });
+
+    // 音量切換
+    $("#vol-btn").click(function(){
+        curVol.push(player.getVolume());
+        curVol.shift();
+        console.log(curVol);
+        if (player.getVolume() !== 0) {
+           player.setVolume(0);
+           slider.noUiSlider.set(0);
+           $("#vol-btn").addClass("fa-volume-off").removeClass("fa-volume-up");
+        } else {
+           player.setVolume(curVol[0]);
+           slider.noUiSlider.set(curVol[0]);
+           $("#vol-btn").addClass("fa-volume-up").removeClass("fa-volume-off");
+        }
+    });
+
+    // 全屏切換
+    $("#full-btn").click(function(){
+        screenfull.toggle();
+        if (!screenfull.isFullscreen) {
+           $("#JSMplayer").addClass("player-isfull").removeClass("player");
+           $("#video-canvas").addClass("player-media-isfull").removeClass("player-media");
+        } else {
+           $("#JSMplayer").removeClass("player-isfull").addClass("player");
+           $("#video-canvas").removeClass("player-media-isfull").addClass("player-media");
+        }
+    });
+});
+
+
+
+var timeoutId = "";
+
+// UI 計時器
+function startTimer() {
+    timeoutID = window.setTimeout(goInactive, 2000);
+}
+function goInactive() {
+    $(".player-UI").fadeOut("fast");
+}
+function resetTimer(e) {
+    window.clearTimeout(timeoutID);
+
+    goActive();
+}
+function goActive() {
+    $(".player-UI").fadeIn("fast");
+    startTimer();
+}
+function setup() {
+    canvas.addEventListener("mousemove", resetTimer, false);
+    canvas.addEventListener("mousedown", resetTimer, false);
+    canvas.addEventListener("keypress", resetTimer, false);
+    canvas.addEventListener("DOMMouseScroll", resetTimer, false);
+    canvas.addEventListener("mousewheel", resetTimer, false);
+    canvas.addEventListener("touchmove", resetTimer, false);
+    canvas.addEventListener("MSPointerMove", resetTimer, false);
+
+    startTimer();
+}
